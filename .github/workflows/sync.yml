@@ -1,0 +1,23 @@
+name: Wiki Sync
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  sync:
+
+    name: Synchronize Wiki
+    runs-on: ubuntu-latest
+    if: github.repository == 'Phoenix-Starlight/WikiPusher'
+
+    steps:
+    - name: Checking out repository
+      uses: actions/checkout@v4
+
+    - name: Syncing to github-wiki
+      run: sh sync.sh
+      env:
+        ACCESS_TOKEN: ${{ secrets.CONTENTS_PERM_ONE_REPO_PAT }}
+        LOGIN_EMAIL: ${{ secrets.LOGIN_EMAIL }}
